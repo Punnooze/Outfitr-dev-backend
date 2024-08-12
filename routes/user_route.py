@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from starlette.responses import JSONResponse
-from config.database import user_collection, dataprofile_collection
+from config.database import user_collection, dataprofile_collection, address_collection, order_collection, wishlist_collection
 from models.user_model import User
 from models.user_dataprofile_model import UserDataProfile
 from bson import ObjectId
@@ -19,10 +19,14 @@ async def new_user(user_details: dict ):
                 'userId': user_details['userId']
             }
             created_user = user_collection.insert_one(dict(new_user))
-
-            return JSONResponse({'message': 'User created!'})
-        return JSONResponse({'message': 'User already exists!'})
-    return JSONResponse({'message': 'User not signed in!'})
+            if created_user:
+                blank_address = address_collection.insert_one({'userId': created_user.inserted_id, 'user_addresses': []})
+                blank_order = order_collection.insert_one({'userId': created_user.inserted_id, 'orders': []})   
+                blank_wishlist = wishlist_collection.insert_one({'userId': created_user.inserted_id, 'wishlist': []})
+                return JSONResponse({'message': 'User created'})
+            return JSONResponse({'message': 'User not created'})
+        return JSONResponse({'message': 'User already exists'})
+    return JSONResponse({'message': 'No user details provided'})
 
 
 @user_router.post('/newQuestionnaire/{id}')

@@ -14,7 +14,7 @@ class Product(BaseModel):
     primary_colour: Optional[str]
     secondary_colour: Optional[str] = None
     material: Optional[str] = None
-    style: Optional[str] = None  
+    fit: Optional[str] = None  
     occasion: Optional[str] = None
     season: Optional[str] = None
     theme: Optional[str] = None

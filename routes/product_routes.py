@@ -46,3 +46,5 @@ async def get_master_categories():
     distinct_master_categories = products_collection.distinct('master_category')
     return JSONResponse({'master_categories': distinct_master_categories})
 
+
+

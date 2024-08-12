@@ -5,7 +5,11 @@ class OrderProduct(BaseModel):
     product_link: str
     quantity: int
 
-class Orders(BaseModel):
-    user_id: str
+class AllOrders(BaseModel):
     date: Optional[str]
     products: Optional[List[OrderProduct]]
+
+
+class Orders(BaseModel):
+    user_id: str
+    orders: Optional[List[AllOrders]] = []
