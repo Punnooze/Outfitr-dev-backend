@@ -1,0 +1,6 @@
+uvicorn = "*"
+fastapi = "*"
+python-jose = "*"
+fastapi-authlib = "*"
+jinja2 = "*"
+dotenv = "*"
