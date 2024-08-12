@@ -22,6 +22,8 @@ async def new_user(user_details: dict ):
                 'userId': user_details['userId']
             }
             created_user = user_collection.insert_one(dict(new_user))
+            # if created_user:
+
             return JSONResponse({'message': 'User created!'})
         return JSONResponse({'message': 'User already exists!'})
     return JSONResponse({'message': 'User not signed in!'})
