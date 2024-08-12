@@ -10,7 +10,6 @@ user_router = APIRouter()
 
 @user_router.post("/newUser")
 async def new_user(user_details: dict ):
-    # current_user = request.session.get('user')
     if user_details:
         exists = user_collection.find_one({'email': user_details['email']})
         if not exists:
@@ -20,13 +19,10 @@ async def new_user(user_details: dict ):
                 'userId': user_details['userId']
             }
             created_user = user_collection.insert_one(dict(new_user))
-            # if created_user:
 
             return JSONResponse({'message': 'User created!'})
         return JSONResponse({'message': 'User already exists!'})
     return JSONResponse({'message': 'User not signed in!'})
-
-# 66b908a4e3c499b698a2c000
 
 
 @user_router.post('/newQuestionnaire/{id}')
@@ -41,19 +37,6 @@ async def post_questionnaire(user_data: UserDataProfile, id: str):
         return JSONResponse({'message': 'Questionnaire submitted!'})
     return JSONResponse({'message': 'Questionnaire not submitted!'})
 
-
-# {
-#   "gender": "female",
-#   "age_group": "16-25",
-#   "location": "dubai",
-#  "preferred_sizes": {
-#     "bust": 40,
-#     "waist": 36,
-#     "hip": 40
-#   }
-# }
-
-# 66b908a4e3c499b698a2c000
 
 @user_router.put('/editQuestionnaire/{id}')
 async def edit_questionnaire(new_values: dict, id: str):
