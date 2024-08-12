@@ -1,4 +1,4 @@
-from motor.motor_asyncio import AsyncIOMotorClient
+# from motor.motor_asyncio import AsyncIOMotorClient
 
 # client = AsyncIOMotorClient('mongodb+srv://outfitradmin:outfitradmin@outfitr.3aqqnzz.mongodb.net/?retryWrites=true&w=majority&appName=outfitr')
 from pymongo import MongoClient

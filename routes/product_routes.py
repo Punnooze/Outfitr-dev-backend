@@ -1,6 +1,4 @@
-from fastapi import APIRouter, HTTPException
-from fastapi.templating import Jinja2Templates
-from starlette.requests import Request
+from fastapi import APIRouter
 from starlette.responses import JSONResponse
 from config.database import products_collection
 from models.product_model import Product 
