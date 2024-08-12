@@ -5,3 +5,4 @@ PyJWT == 2.9.0
 pymango == 0.1.1
 motor == 3.5.1
 itsdangerous == 2.2.0
+python-dotenv == 1.0.1

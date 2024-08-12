@@ -1,6 +1,10 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
+load_dotenv()
+MONGO_URI = os.getenv('MONGO_URI')
 
-client = MongoClient('mongodb+srv://outfitradmin:Outfitrr@outfitr.3aqqnzz.mongodb.net/?retryWrites=true&w=majority&appName=outfitr')
+client = MongoClient(MONGO_URI)
 
 db = client.outfitr_database
 user_collection = db['user']
