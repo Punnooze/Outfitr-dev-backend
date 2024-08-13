@@ -69,16 +69,6 @@ async def get_women():
         return JSONResponse({'message': 'Products not found!'}, status_code=404)
     women = [serialize_product(product) for product in women_list]
     return JSONResponse({'products': women})
-        
-
-# @product_router.get('/scanSame')
-# async def get_same():
-#     same_cursor = products_collection.find({"productName": "Black Wingman Oversized T-Shirt"})
-#     same_list = list(same_cursor)
-#     if not same_list:
-#         return JSONResponse({'message': 'Products not found!'}, status_code=404)
-#     same = [serialize_product(product) for product in same_list]
-#     return JSONResponse({'products': same})
 
 @product_router.get('/scan')
 async def get_scan():
@@ -100,29 +90,23 @@ async def get_colour():
     product_names = ["Legacy T-shirt // 002", "Within", "life is better when you paint", "Easy T-shirt", "Legacy T-shirt // 001"]
     same_cursor = products_collection.find({"productName": {"$in": product_names}})
     same_list = list(same_cursor)
-    
     if not same_list:
         return JSONResponse({'message': 'Products not found!'}, status_code=404)
-
     serialized_products = [serialize_product(product) for product in same_list]
-
     sorted_products = sorted(serialized_products, key=lambda product: product_names.index(product['productName']))
-    
     return JSONResponse({'products': sorted_products})
 
-
-
+@product_router.get('/filter')
+async def get_filter():
+    filter_cursor = products_collection.find({"price": {"$gte": 600, "$lte": 1499}, "brand": {"$in": ["Bonkers corner", "Urban Monkey", "H&M"]}, "sub_category": "Oversized T-shirt"})
+    filter_list = list(filter_cursor)
+    if not filter_list:
+        return JSONResponse({'message': 'Products not found!'}, status_code=404)
+    filtered = [serialize_product(product) for product in filter_list]
+    return JSONResponse({'products': filtered})
 
 @product_router.get('/allBrands')
 async def get_all_brands():
     distinct_brands = products_collection.distinct('brand')
     return JSONResponse({'brands': distinct_brands})
 
-
-# # filter
-
-# {
-#     "brands":{
-        
-#     }
-# }
