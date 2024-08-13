@@ -14,7 +14,7 @@ class PriceEnum(str, Enum):
     pc3 = "1500-2499"
     pc4 = "2500-3499"
     pc5 = "3500-4499"
-    pc5 = "4500+"
+    pc6 = "4500+"
 
 class AgeEnum(str, Enum):
     ac1 = "18-25"
