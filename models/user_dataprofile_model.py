@@ -23,9 +23,9 @@ class AgeEnum(str, Enum):
     ac4 = "46+"
 
 class FitEnum(str, Enum):
-    fit1 = "Slim Fit"
+    fit1 = "Slim"
     fit2 = "True to size "
-    fit3 = "Oversized Fit"
+    fit3 = "Oversized"
 
 
 class MaleMeasurement(BaseModel):
