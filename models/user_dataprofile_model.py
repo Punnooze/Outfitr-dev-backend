@@ -4,8 +4,8 @@ from enum import Enum
 
 
 class GenderEnum(str, Enum):
-    male = "male"
-    female = "female"
+    male = "men"
+    female = "women"
     unisex = "unisex"
 
 class PriceEnum(str, Enum):
@@ -24,7 +24,7 @@ class AgeEnum(str, Enum):
 
 class FitEnum(str, Enum):
     fit1 = "Slim"
-    fit2 = "True to size "
+    fit2 = "True to Size"
     fit3 = "Oversized"
 
 
@@ -48,8 +48,8 @@ class UserDataProfile(BaseModel):
     measurements: Optional[Dict[str, Optional[Union[MaleMeasurement, FemaleMeasurement]]]] = Field(default_factory=dict)
     fit: Optional[FitEnum]
     location: Optional[str] = None
-    collaborative_filter: Optional[bool] = False
-    preferred_themes: List[str] = Field(default_factory=list)
-    preferred_master_categories: List[str] = Field(default_factory=list)
-    preferred_sub_categories: List[str] = Field(default_factory=list)
-    brand_blacklist: Optional[List[str]] = Field(default_factory=list)
+    collaborative_filter: Optional[bool] = None  
+    preferred_themes: Optional[List[str]] = None  
+    preferred_master_categories: Optional[List[str]] = None  
+    preferred_sub_categories: Optional[List[str]] = None  
+    brand_blacklist: Optional[List[str]] = None  

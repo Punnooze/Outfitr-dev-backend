@@ -8,7 +8,7 @@ class Product(BaseModel):
     product_url: str
     cover_image: str
     images: List[str]
-    product_name: str
+    productName: str
     sizes_available: Optional[List[str]]
     price: float
     primary_colour: Optional[str]
