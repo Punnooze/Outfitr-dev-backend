@@ -45,8 +45,8 @@ class UserDataProfile(BaseModel):
     age_group: AgeEnum
     preferred_brands: List[str] = Field(default_factory=list)
     price_range: PriceEnum
-    measurements: Dict[str, Optional[Union[MaleMeasurement, FemaleMeasurement]]] = Field(default_factory=dict)
-    fit: FitEnum
+    measurements: Optional[Dict[str, Optional[Union[MaleMeasurement, FemaleMeasurement]]]] = Field(default_factory=dict)
+    fit: Optional[FitEnum]
     location: Optional[str] = None
     collaborative_filter: Optional[bool] = False
     preferred_themes: List[str] = Field(default_factory=list)
