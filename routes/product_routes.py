@@ -98,18 +98,14 @@ async def get_scan():
 @product_router.get('/matchSimilar')
 async def get_colour():
     product_names = ["Legacy T-shirt // 002", "Within", "life is better when you paint", "Easy T-shirt", "Legacy T-shirt // 001"]
-    
-    # Fetch all matching products
     same_cursor = products_collection.find({"productName": {"$in": product_names}})
     same_list = list(same_cursor)
     
     if not same_list:
         return JSONResponse({'message': 'Products not found!'}, status_code=404)
-    
-    # Serialize the products
+
     serialized_products = [serialize_product(product) for product in same_list]
-    
-    # Sort the serialized products based on the order in product_names
+
     sorted_products = sorted(serialized_products, key=lambda product: product_names.index(product['productName']))
     
     return JSONResponse({'products': sorted_products})

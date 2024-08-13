@@ -29,52 +29,87 @@ async def new_user(user_details: dict ):
     return JSONResponse({'message': 'No user details provided'})
 
 
+# @user_router.post('/newQuestionnaire/{id}')
+# async def post_questionnaire(id: str, user_data: UserDataProfile):
+#     try:
+#         object_id = ObjectId(id)
+#     except Exception as e:
+#         return JSONResponse({'message': 'Invalid user ID'}, status_code=400)
+#     print(user_data)
+#     form_data = {
+#         "user_id": str(object_id),
+#         "gender": user_data.gender,
+#         "age_group": user_data.age_group,
+#         "preferred_brands": user_data.preferred_brands,
+#         "price_range": user_data.price_range,
+#         "measurements": user_data.measurements,
+#         "fit": user_data.fit,
+#         "location": user_data.location,
+#         "collaborative_filter": True,
+#         "preferred_themes": user_data.preferred_themes or [],
+#         "preferred_master_categories": user_data.preferred_master_categories or [],
+#         "preferred_sub_categories": user_data.preferred_sub_categories or [],
+#         "brand_blacklist": user_data.brand_blacklist or []
+#     }
+#     print('form_data', form_data)
+#     try:
+#         profile = dataprofile_collection.insert_one(form_data)
+        
+#         if profile:
+#             return JSONResponse({'message': 'Questionnaire submitted!'})
+#         # object_id = ObjectId(id)
+#     except Exception as e:
+#         print(e)
+#     return JSONResponse({'message': 'Questionnaire not submitted!'})
+
+
 @user_router.post('/newQuestionnaire/{id}')
 async def post_questionnaire(id: str, user_data: UserDataProfile):
     try:
         object_id = ObjectId(id)
     except Exception as e:
         return JSONResponse({'message': 'Invalid user ID'}, status_code=400)
-    print(user_data)
-    form_data = {
-        "user_id": str(object_id),
-        "gender": user_data.gender,
-        "age_group": user_data.age_group,
-        "preferred_brands": user_data.preferred_brands,
-        "price_range": user_data.price_range,
-        "measurements": user_data.measurements,
-        "fit": user_data.fit,
-        "location": user_data.location,
-        "collaborative_filter": True,
-        "preferred_themes": user_data.preferred_themes or [],
-        "preferred_master_categories": user_data.preferred_master_categories or [],
-        "preferred_sub_categories": user_data.preferred_sub_categories or [],
-        "brand_blacklist": user_data.brand_blacklist or []
-    }
-    # print('form_data', form_data)
+
+    # Convert Pydantic model to dictionary
+    form_data = user_data.dict()
+    form_data["user_id"] = str(object_id)
+    form_data["collaborative_filter"] = True
     
-    # profile = dataprofile_collection.insert_one(form_data)
+    # Handle optional fields
+    form_data["preferred_themes"] = form_data.get("preferred_themes", [])
+    form_data["preferred_master_categories"] = form_data.get("preferred_master_categories", [])
+    form_data["preferred_sub_categories"] = form_data.get("preferred_sub_categories", [])
+    form_data["brand_blacklist"] = form_data.get("brand_blacklist", [])
+
+    print('form_data', form_data)
     
-    # if profile:
-    #     return JSONResponse({'message': 'Questionnaire submitted!'})
+    try:
+        result = dataprofile_collection.insert_one(form_data)
+        
+        if result:
+            return JSONResponse({'message': 'Questionnaire submitted!'})
+    except Exception as e:
+        print(e)
+
     return JSONResponse({'message': 'Questionnaire not submitted!'})
 
-{
-    "user_id":"string", 
-    "age_group": "18-25", 
-    "fit": "True to Size", 
-    "gender": "men", 
-    "location": "klr", 
-    "measurements": {
-        "men": 
-        {
-            "chest": 40, 
-            "waist": 32
-        },
-        "women": None
-        }, 
-        "preferred_brands": ["Veg Non Veg"], "price_range":"600-1499"
-        }
+
+# {
+#     "user_id":"string", 
+#     "age_group": "18-25", 
+#     "fit": "True to Size", 
+#     "gender": "men", 
+#     "location": "klr", 
+#     "measurements": {
+#         "men": 
+#         {
+#             "chest": 40, 
+#             "waist": 32
+#         },
+#         "women": None
+#         }, 
+#         "preferred_brands": ["Veg Non Veg"], "price_range":"600-1499"
+#         }
 
 
 @user_router.put('/editQuestionnaire/{id}')
